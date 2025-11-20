@@ -311,6 +311,106 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
         </div>
       </section>
 
+      <section className="relative py-24 px-6 bg-gradient-to-b from-transparent via-blue-950/10 to-transparent">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                See It In Action
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Real character cameos created with Smart Cameos
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-alisa.mp4',
+                description: 'Sipping coffee at a Parisian cafe',
+                creator: 'alisa_fortin'
+              },
+              {
+                videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-omar.mp4',
+                description: 'At a llama petting zoo',
+                creator: 'osanseviero'
+              },
+              {
+                videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-ammaar.mp4',
+                description: 'At a red carpet ceremony',
+                creator: 'ammaar'
+              },
+              {
+                videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-logan.mp4',
+                description: 'Vibe coding on a mountain',
+                creator: 'OfficialLoganK'
+              },
+              {
+                videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-kat.mp4',
+                description: 'Exploring a majestic temple',
+                creator: 'kat_kampf'
+              },
+              {
+                videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-josh.mp4',
+                description: 'On the Google Keynote stage',
+                creator: 'joshwoodward'
+              }
+            ].map((demo, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="group relative"
+              >
+                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-white/5 to-transparent border border-white/10 hover:border-white/20 transition-all backdrop-blur-xl">
+                  <video
+                    src={demo.videoUrl}
+                    className="w-full aspect-video object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <p className="text-white font-semibold mb-1">{demo.description}</p>
+                      <p className="text-gray-400 text-sm">by @{demo.creator}</p>
+                    </div>
+                  </div>
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full text-xs font-semibold">
+                    Veo AI
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mt-12"
+          >
+            <button
+              onClick={onGetStarted}
+              className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 rounded-full font-semibold text-lg transition-all shadow-2xl shadow-blue-500/30 flex items-center gap-2 mx-auto"
+            >
+              Create Your Own Character Cameo
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
       <section className="relative py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <motion.div
