@@ -28,6 +28,9 @@ import CompetitorAnalysisModal from './components/CompetitorAnalysisModal';
 import BrandGuidelinesModal from './components/BrandGuidelinesModal';
 import { AuthModal } from './components/AuthModal';
 import { LandingPage } from './components/LandingPage';
+import { FeaturesPage } from './components/FeaturesPage';
+import { HowItWorksPage } from './components/HowItWorksPage';
+import { AIToolsPage } from './components/AIToolsPage';
 import { generateVideo } from './services/geminiService';
 import { creditService } from './services/creditService';
 import { generationService } from './services/generationService';
@@ -126,6 +129,7 @@ const App: React.FC = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showLanding, setShowLanding] = useState(!user);
+  const [currentPage, setCurrentPage] = useState<'landing' | 'features' | 'how-it-works' | 'ai-tools'>('landing');
   const [showUnifiedToolPanel, setShowUnifiedToolPanel] = useState(false);
   const [showCampaignBuilder, setShowCampaignBuilder] = useState(false);
   const [showPerformanceInsights, setShowPerformanceInsights] = useState(false);
@@ -303,6 +307,22 @@ const App: React.FC = () => {
     setShowAuthModal(true);
   };
 
+  const handleNavigateToFeatures = () => {
+    setCurrentPage('features');
+  };
+
+  const handleNavigateToHowItWorks = () => {
+    setCurrentPage('how-it-works');
+  };
+
+  const handleNavigateToAITools = () => {
+    setCurrentPage('ai-tools');
+  };
+
+  const handleBackToLanding = () => {
+    setCurrentPage('landing');
+  };
+
   const handleToolOpen = (toolName: string) => {
     setShowUnifiedToolPanel(false);
     switch (toolName) {
@@ -344,7 +364,23 @@ const App: React.FC = () => {
   };
 
   if (showLanding) {
-    return <LandingPage onGetStarted={handleGetStarted} />;
+    if (currentPage === 'features') {
+      return <FeaturesPage onBack={handleBackToLanding} onGetStarted={handleGetStarted} />;
+    }
+    if (currentPage === 'how-it-works') {
+      return <HowItWorksPage onBack={handleBackToLanding} onGetStarted={handleGetStarted} />;
+    }
+    if (currentPage === 'ai-tools') {
+      return <AIToolsPage onBack={handleBackToLanding} onGetStarted={handleGetStarted} />;
+    }
+    return (
+      <LandingPage
+        onGetStarted={handleGetStarted}
+        onNavigateToFeatures={handleNavigateToFeatures}
+        onNavigateToHowItWorks={handleNavigateToHowItWorks}
+        onNavigateToAITools={handleNavigateToAITools}
+      />
+    );
   }
 
   return (

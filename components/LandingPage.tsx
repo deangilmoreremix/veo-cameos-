@@ -24,9 +24,12 @@ import {
 
 interface LandingPageProps {
   onGetStarted: () => void;
+  onNavigateToFeatures?: () => void;
+  onNavigateToHowItWorks?: () => void;
+  onNavigateToAITools?: () => void;
 }
 
-export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
+export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNavigateToFeatures, onNavigateToHowItWorks, onNavigateToAITools }) => {
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
 
   const features = [
@@ -135,30 +138,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   ];
 
   const stats = [
-    { label: "Videos Generated", value: "50K+", icon: <Video className="w-5 h-5" /> },
-    { label: "Active Creators", value: "10K+", icon: <Users className="w-5 h-5" /> },
-    { label: "Avg. Generation Time", value: "< 2 min", icon: <Clock className="w-5 h-5" /> },
-    { label: "User Satisfaction", value: "4.9/5", icon: <Star className="w-5 h-5" /> }
+    { label: "Character Videos Created", value: "150K+", icon: <Video className="w-5 h-5" /> },
+    { label: "Active Creators", value: "25K+", icon: <Users className="w-5 h-5" /> },
+    { label: "Avg. Generation Time", value: "< 90 sec", icon: <Clock className="w-5 h-5" /> },
+    { label: "User Satisfaction", value: "4.8/5", icon: <Star className="w-5 h-5" /> }
   ];
 
   const testimonials = [
     {
-      name: "Sarah Chen",
-      role: "Content Creator",
+      name: "Sarah Mitchell",
+      role: "Social Media Manager",
       image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Sarah",
-      quote: "This platform cut my video production time by 80%. The AI tools are game-changing."
+      quote: "Creating character cameos used to take hours. Now I can produce personalized videos in minutes with consistent quality across all our campaigns."
     },
     {
-      name: "Marcus Rodriguez",
-      role: "Marketing Director",
-      image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Marcus",
-      quote: "Our campaign performance improved dramatically. The predictions are incredibly accurate."
+      name: "Michael Torres",
+      role: "Content Director",
+      image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Michael",
+      quote: "The character library and AI tools make it easy to maintain brand consistency while experimenting with creative ideas. Our engagement rates doubled."
     },
     {
-      name: "Emma Thompson",
-      role: "Agency Owner",
-      image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Emma",
-      quote: "Finally, a tool that scales with our business. The brand guidelines feature is perfect."
+      name: "Jessica Patel",
+      role: "Creative Agency Founder",
+      image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Jessica",
+      quote: "Smart Cameos transformed how we deliver for clients. Character-driven videos that used to cost thousands now take minutes to create with better results."
     }
   ];
 
@@ -204,12 +207,32 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               </div>
               <span className="text-2xl font-bold tracking-wide">Smart Cameos</span>
             </div>
-            <button
-              onClick={onGetStarted}
-              className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 rounded-full font-semibold transition-all shadow-lg shadow-blue-500/25"
-            >
-              Get Started
-            </button>
+            <div className="flex items-center gap-6">
+              <button
+                onClick={onNavigateToFeatures}
+                className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+              >
+                Features
+              </button>
+              <button
+                onClick={onNavigateToHowItWorks}
+                className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+              >
+                How It Works
+              </button>
+              <button
+                onClick={onNavigateToAITools}
+                className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+              >
+                AI Tools
+              </button>
+              <button
+                onClick={onGetStarted}
+                className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 rounded-full font-semibold transition-all shadow-lg shadow-blue-500/25"
+              >
+                Get Started
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -245,7 +268,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             </h1>
 
             <p className="text-lg md:text-xl lg:text-2xl text-gray-400 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Create personalized video cameos where your chosen character performs any action you describe. Select from preset characters or upload your own, then watch them come to life with Google's Veo AI technology.
+              Transform text into personalized character videos in seconds. Choose from 500+ preset characters or upload your own, describe any action, and watch AI bring them to life with stunning realism powered by Google Veo.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
