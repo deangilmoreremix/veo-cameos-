@@ -332,37 +332,37 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/alisa-before.jpg',
+                beforeImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-alisa.mp4',
                 description: 'Sipping coffee at a Parisian cafe',
                 creator: 'alisa_fortin'
               },
               {
-                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/omar-before.jpg',
+                beforeImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-omar.mp4',
                 description: 'At a llama petting zoo',
                 creator: 'osanseviero'
               },
               {
-                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/ammaar-before.jpg',
+                beforeImage: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-ammaar.mp4',
                 description: 'At a red carpet ceremony',
                 creator: 'ammaar'
               },
               {
-                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/logan-before.jpg',
+                beforeImage: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-logan.mp4',
                 description: 'Vibe coding on a mountain',
                 creator: 'OfficialLoganK'
               },
               {
-                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/kat-before.jpg',
+                beforeImage: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-kat.mp4',
                 description: 'Exploring a majestic temple',
                 creator: 'kat_kampf'
               },
               {
-                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/josh-before.jpg',
+                beforeImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-josh.mp4',
                 description: 'On the Google Keynote stage',
                 creator: 'joshwoodward'
