@@ -33,24 +33,24 @@ export const FeaturesPage: React.FC<FeaturesPageProps> = ({ onBack, onGetStarted
       title: "Personalized Character Cameos",
       description: "Create engaging video cameos featuring characters of your choice performing custom actions from simple text prompts.",
       benefits: [
-        "Select from curated preset characters",
-        "Upload and use your own custom characters",
+        "Upload your own custom character images",
+        "Use sample profile characters",
         "Describe any action or scenario",
-        "Generate HD to 8K quality videos",
+        "Generate HD to 4K quality videos",
         "Full creative control over character behavior"
       ],
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Users className="w-12 h-12" />,
-      title: "Character Library Management",
-      description: "Access a growing library of preset characters or create your own custom character collection for unlimited creative possibilities.",
+      title: "Custom Character Management",
+      description: "Upload and manage your own character images to create unlimited personalized video cameos with consistent characters.",
       benefits: [
-        "Browse hundreds of preset characters",
-        "Upload custom character images",
+        "Upload unlimited custom character images",
         "Organize characters into collections",
         "Save favorite characters for quick access",
-        "Share character collections with team members"
+        "Reuse characters across multiple videos",
+        "Support for PNG, JPG, WEBP formats"
       ],
       color: "from-green-500 to-emerald-500"
     },
@@ -151,7 +151,7 @@ export const FeaturesPage: React.FC<FeaturesPageProps> = ({ onBack, onGetStarted
     {
       category: "Video Quality",
       specs: [
-        "Resolution: 720p, 1080p, 4K, 8K",
+        "Resolution: 720p, 1080p, 4K",
         "Aspect Ratios: 16:9, 9:16, 1:1, 4:5",
         "Duration: 5-60 seconds per cameo",
         "Format: MP4, WebM, MOV"
@@ -169,7 +169,7 @@ export const FeaturesPage: React.FC<FeaturesPageProps> = ({ onBack, onGetStarted
     {
       category: "Character Support",
       specs: [
-        "Preset Characters: 500+ available",
+        "Sample Characters: 5 profiles included",
         "Custom Characters: Unlimited uploads",
         "File Types: PNG, JPG, WEBP",
         "Max File Size: 10MB per character"

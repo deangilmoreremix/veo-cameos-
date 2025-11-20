@@ -41,8 +41,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
     },
     {
       icon: <Users className="w-8 h-8" />,
-      title: "Character Library",
-      description: "Choose from a curated selection of preset characters or upload your own custom characters",
+      title: "Custom Character Upload",
+      description: "Upload your own character images and create unlimited personalized video cameos with them",
       color: "from-green-500 to-emerald-500"
     },
     {
@@ -138,10 +138,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
   ];
 
   const stats = [
-    { label: "Character Videos Created", value: "150K+", icon: <Video className="w-5 h-5" /> },
-    { label: "Active Creators", value: "25K+", icon: <Users className="w-5 h-5" /> },
-    { label: "Avg. Generation Time", value: "< 90 sec", icon: <Clock className="w-5 h-5" /> },
-    { label: "User Satisfaction", value: "4.8/5", icon: <Star className="w-5 h-5" /> }
+    { label: "Videos Generated", value: "10K+", icon: <Video className="w-5 h-5" /> },
+    { label: "Active Creators", value: "2K+", icon: <Users className="w-5 h-5" /> },
+    { label: "Avg. Generation Time", value: "< 2 min", icon: <Clock className="w-5 h-5" /> },
+    { label: "Powered By", value: "Veo AI", icon: <Sparkles className="w-5 h-5" /> }
   ];
 
   const testimonials = [
@@ -268,7 +268,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
             </h1>
 
             <p className="text-lg md:text-xl lg:text-2xl text-gray-400 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Transform text into personalized character videos in seconds. Choose from 500+ preset characters or upload your own, describe any action, and watch AI bring them to life with stunning realism powered by Google Veo.
+              Transform text into personalized character videos in seconds. Upload your own character images, describe any action, and watch AI bring them to life with stunning realism powered by Google Veo.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -401,9 +401,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
                     <Users className="w-5 h-5 text-black" />
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Choose Character</h3>
+                <h3 className="text-2xl font-bold mb-3">Upload Character</h3>
                 <p className="text-gray-400 leading-relaxed">
-                  Select from 500+ preset characters or upload your own custom character image. Organize favorites for quick access.
+                  Upload your own character image (or use sample profiles). Organize your character collection for quick access.
                 </p>
               </div>
             </motion.div>
@@ -790,7 +790,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
                 What is a character cameo?
               </h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                A character cameo is a short video where a character of your choice performs a specific action you describe. You can use preset characters from our library or upload your own custom character images.
+                A character cameo is a short video where a character of your choice performs a specific action you describe. Upload your own character images to create personalized videos with them.
               </p>
             </motion.div>
 

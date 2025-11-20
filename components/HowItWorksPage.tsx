@@ -29,13 +29,13 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onBack, onGetSta
     {
       number: "01",
       icon: <Users className="w-12 h-12" />,
-      title: "Choose Your Character",
-      description: "Select from our curated library of preset characters or upload your own custom character image to personalize your cameo.",
+      title: "Upload Your Character",
+      description: "Upload your own character image or use one of the sample profiles to create personalized video cameos.",
       details: [
-        "Browse 500+ preset characters across categories",
         "Upload custom character images (PNG, JPG, WEBP)",
-        "Organize characters into personal collections",
-        "Tag favorites for quick access"
+        "Use 5 sample character profiles included",
+        "Organize your characters for easy access",
+        "Reuse characters across multiple videos"
       ],
       image: "character-selection",
       color: "from-blue-500 to-cyan-500"
@@ -60,7 +60,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onBack, onGetSta
       title: "Customize Settings",
       description: "Fine-tune your video with advanced options like resolution, aspect ratio, style preferences, and platform optimization.",
       details: [
-        "Choose resolution (720p to 8K)",
+        "Choose resolution (720p to 4K)",
         "Select aspect ratio for platform",
         "Apply visual style presets",
         "Set generation speed preference"
