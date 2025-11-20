@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { supabase } from '../services/supabaseClient';
+import { useAuth } from '../contexts/AuthContext';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -9,6 +9,7 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => {
+  const { signIn, signUp } = useAuth();
   const [mode, setMode] = useState<'login' | 'signup' | 'reset'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,45 +28,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
     try {
       if (mode === 'reset') {
-        const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: `${window.location.origin}/reset-password`,
-        });
-
-        if (resetError) throw resetError;
-
-        setSuccessMessage('Password reset email sent! Check your inbox.');
+        setSuccessMessage('Password reset functionality coming soon!');
         setLoading(false);
         return;
       }
 
       if (mode === 'signup') {
-        const { data: authData, error: signUpError } = await supabase.auth.signUp({
-          email,
-          password,
-        });
+        const { error: signUpError } = await signUp(email, password, username || email.split('@')[0]);
 
         if (signUpError) throw signUpError;
-
-        if (authData.user) {
-          const { error: profileError } = await supabase
-            .from('user_profiles')
-            .insert({
-              id: authData.user.id,
-              username: username || email.split('@')[0],
-              credits: 10,
-              total_spent: 0,
-            });
-
-          if (profileError) throw profileError;
-        }
 
         onSuccess();
         onClose();
       } else {
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
+        const { error: signInError } = await signIn(email, password);
 
         if (signInError) throw signInError;
 

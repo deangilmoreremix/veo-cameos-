@@ -7,6 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ResetPasswordPage } from './components/ResetPasswordPage';
+import { AuthProvider } from './contexts/AuthContext';
 import './index.css';
 
 const rootElement = document.getElementById('root');
@@ -19,6 +20,8 @@ const isResetPasswordPage = window.location.pathname === '/reset-password' || wi
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    {isResetPasswordPage ? <ResetPasswordPage /> : <App />}
+    <AuthProvider>
+      {isResetPasswordPage ? <ResetPasswordPage /> : <App />}
+    </AuthProvider>
   </React.StrictMode>
 );

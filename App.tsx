@@ -5,6 +5,7 @@
 */
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useAuth } from './contexts/AuthContext';
 import ApiKeyDialog from './components/ApiKeyDialog';
 import BottomPromptBar from './components/BottomPromptBar';
 import VideoCard from './components/VideoCard';
@@ -99,10 +100,10 @@ const sampleVideos: FeedPost[] = [
 ];
 
 const App: React.FC = () => {
+  const { user, profile, signOut, refreshProfile } = useAuth();
   const [feed, setFeed] = useState<FeedPost[]>(sampleVideos);
   const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
   const [errorToast, setErrorToast] = useState<string | null>(null);
-  const [credits, setCredits] = useState<number>(10);
   const [showPricingModal, setShowPricingModal] = useState(false);
   const [showLibraryModal, setShowLibraryModal] = useState(false);
   const [showScriptGenerator, setShowScriptGenerator] = useState(false);
@@ -117,62 +118,17 @@ const App: React.FC = () => {
   const [generations, setGenerations] = useState<any[]>([]);
   const [promptFromScript, setPromptFromScript] = useState<string>('');
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [userProfile, setUserProfile] = useState<any>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showLanding, setShowLanding] = useState(true);
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  const [showLanding, setShowLanding] = useState(!user);
 
   useEffect(() => {
     if (user) {
-      loadUserData();
+      setShowLanding(false);
       loadGenerations();
+    } else {
+      setShowLanding(true);
     }
   }, [user]);
-
-  const checkAuth = async () => {
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        await loadUserProfile(session.user.id);
-        setShowLanding(false);
-      }
-
-      const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-        (async () => {
-          setUser(session?.user ?? null);
-          if (session?.user) {
-            await loadUserProfile(session.user.id);
-            setShowLanding(false);
-          }
-        })();
-      });
-    } catch (error) {
-      console.error('Auth check failed:', error);
-    }
-  };
-
-  const loadUserProfile = async (userId: string) => {
-    const { data, error } = await supabase
-      .from('user_profiles')
-      .select('*')
-      .eq('id', userId)
-      .maybeSingle();
-
-    if (data) {
-      setUserProfile(data);
-      setCredits(data.credits);
-    }
-  };
-
-  const loadUserData = async () => {
-    if (!user) return;
-    await loadUserProfile(user.id);
-  };
 
   const loadGenerations = async () => {
     if (!user) return;
@@ -181,11 +137,9 @@ const App: React.FC = () => {
   };
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
-    setUserProfile(null);
-    setCredits(10);
+    await signOut();
     setShowUserMenu(false);
+    setShowLanding(true);
   };
 
   useEffect(() => {
@@ -238,15 +192,14 @@ const App: React.FC = () => {
       setShowAuthModal(true);
       return;
     }
-    setCredits(prev => prev + credits);
 
     const { error } = await supabase
       .from('user_profiles')
-      .update({ credits: credits + (userProfile?.credits || 0) })
+      .update({ credits: credits + (profile?.credits || 0) })
       .eq('id', user.id);
 
     if (!error) {
-      await loadUserProfile(user.id);
+      await refreshProfile();
     }
 
     setShowPricingModal(false);
@@ -261,13 +214,13 @@ const App: React.FC = () => {
   };
 
   const handleGenerate = useCallback(async (params: GenerateVideoParams) => {
-    if (!user) {
+    if (!user || !profile) {
       setShowAuthModal(true);
       setErrorToast('Please sign in to generate videos.');
       return;
     }
 
-    if (credits < 1) {
+    if (profile.credits < 1) {
       setShowPricingModal(true);
       setErrorToast('Insufficient credits. Please purchase more credits to continue.');
       return;
@@ -285,13 +238,14 @@ const App: React.FC = () => {
       }
     }
 
-    const newCredits = credits - 1;
-    setCredits(newCredits);
+    const newCredits = profile.credits - 1;
 
     await supabase
       .from('user_profiles')
       .update({ credits: newCredits })
       .eq('id', user.id);
+
+    await refreshProfile();
 
     const newPostId = Date.now().toString();
     const refImage = params.referenceImages?.[0]?.base64;
@@ -316,7 +270,7 @@ const App: React.FC = () => {
     // Start generation in background
     processGeneration(newPostId, params, generationId);
 
-  }, [credits, user]);
+  }, [profile, user, refreshProfile]);
 
   const handleApiKeyDialogContinue = async () => {
     setShowApiKeyDialog(false);
@@ -404,9 +358,9 @@ const App: React.FC = () => {
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onSuccess={async () => {
-          await checkAuth();
+        onSuccess={() => {
           setErrorToast('Successfully signed in!');
+          setShowLanding(false);
         }}
       />
       
@@ -454,7 +408,7 @@ const App: React.FC = () => {
                           className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl hover:bg-white/10 transition-all text-white"
                         >
                           <User className="w-4 h-4" />
-                          <span className="text-sm font-medium">{userProfile?.username || 'User'}</span>
+                          <span className="text-sm font-medium">{profile?.username || 'User'}</span>
                         </button>
 
                         {showUserMenu && (
@@ -582,7 +536,7 @@ const App: React.FC = () => {
                     </button>
 
                     <CreditDisplay
-                      credits={credits}
+                      credits={profile?.credits || 0}
                       onPurchase={() => setShowPricingModal(true)}
                     />
                 </div>
