@@ -332,31 +332,37 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
+                beforeImage: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=400',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-alisa.mp4',
                 description: 'Sipping coffee at a Parisian cafe',
                 creator: 'alisa_fortin'
               },
               {
+                beforeImage: 'https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=400',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-omar.mp4',
                 description: 'At a llama petting zoo',
                 creator: 'osanseviero'
               },
               {
+                beforeImage: 'https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&w=400',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-ammaar.mp4',
                 description: 'At a red carpet ceremony',
                 creator: 'ammaar'
               },
               {
+                beforeImage: 'https://images.pexels.com/photos/943096/pexels-photo-943096.jpeg?auto=compress&cs=tinysrgb&w=400',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-logan.mp4',
                 description: 'Vibe coding on a mountain',
                 creator: 'OfficialLoganK'
               },
               {
+                beforeImage: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=400',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-kat.mp4',
                 description: 'Exploring a majestic temple',
                 creator: 'kat_kampf'
               },
               {
+                beforeImage: 'https://images.pexels.com/photos/2467506/pexels-photo-2467506.jpeg?auto=compress&cs=tinysrgb&w=400',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-josh.mp4',
                 description: 'On the Google Keynote stage',
                 creator: 'joshwoodward'
@@ -368,25 +374,47 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
                 className="group relative"
               >
                 <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-white/5 to-transparent border border-white/10 hover:border-white/20 transition-all backdrop-blur-xl">
-                  <video
-                    src={demo.videoUrl}
-                    className="w-full aspect-video object-cover"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="relative grid grid-cols-2 gap-0">
+                    <div className="relative aspect-video">
+                      <img
+                        src={demo.beforeImage}
+                        alt="Before"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute bottom-2 left-2 px-2 py-1 bg-black/70 rounded text-xs font-semibold">
+                        Before
+                      </div>
+                    </div>
+                    <div className="relative aspect-video">
+                      <video
+                        src={demo.videoUrl}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                      <div className="absolute bottom-2 left-2 px-2 py-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded text-xs font-semibold">
+                        After
+                      </div>
+                    </div>
+                  </div>
+
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent transition-opacity"
+                  >
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <p className="text-white font-semibold mb-1">{demo.description}</p>
                       <p className="text-gray-400 text-sm">by @{demo.creator}</p>
                     </div>
-                  </div>
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full text-xs font-semibold">
+                  </motion.div>
+
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full text-xs font-semibold shadow-lg">
                     Veo AI
                   </div>
                 </div>
