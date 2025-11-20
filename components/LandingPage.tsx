@@ -32,38 +32,38 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   const features = [
     {
       icon: <Video className="w-8 h-8" />,
-      title: "AI Video Generation",
-      description: "Create stunning videos from text prompts using Google's Veo AI technology",
+      title: "Character-Driven Videos",
+      description: "Create Cameos with preset or custom characters performing actions from your text prompts",
       color: "from-blue-500 to-cyan-500"
+    },
+    {
+      icon: <Users className="w-8 h-8" />,
+      title: "Character Library",
+      description: "Choose from a curated selection of preset characters or upload your own custom characters",
+      color: "from-green-500 to-emerald-500"
     },
     {
       icon: <Brain className="w-8 h-8" />,
       title: "Smart Script Generator",
-      description: "AI-powered script writing that creates engaging video narratives instantly",
-      color: "from-green-500 to-emerald-500"
+      description: "AI-powered script writing that creates engaging action descriptions for your characters",
+      color: "from-orange-500 to-red-500"
     },
     {
       icon: <Palette className="w-8 h-8" />,
       title: "Style Transfer",
-      description: "Extract and apply visual styles across your video projects seamlessly",
-      color: "from-orange-500 to-red-500"
-    },
-    {
-      icon: <Target className="w-8 h-8" />,
-      title: "Campaign Builder",
-      description: "Plan and execute multi-video campaigns with AI-driven strategies",
+      description: "Apply consistent visual styles across multiple character Cameos",
       color: "from-teal-500 to-cyan-500"
     },
     {
       icon: <BarChart className="w-8 h-8" />,
-      title: "Performance Analytics",
-      description: "Predict and track video performance with advanced AI insights",
+      title: "Video Analysis",
+      description: "Analyze your Cameos and get AI insights on performance and engagement",
       color: "from-blue-500 to-violet-500"
     },
     {
       icon: <Zap className="w-8 h-8" />,
-      title: "Instant Repurposing",
-      description: "Adapt content for multiple platforms automatically in seconds",
+      title: "Quick Generation",
+      description: "Generate character-driven video clips in minutes with Google's Veo AI",
       color: "from-amber-500 to-orange-500"
     }
   ];
@@ -71,23 +71,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   const benefits = [
     {
       icon: <Wand2 className="w-6 h-6" />,
-      title: "Effortless Creation",
-      description: "Generate professional videos in minutes, not hours"
+      title: "Simple Prompts",
+      description: "Just describe what you want your character to do"
     },
     {
-      icon: <Layers className="w-6 h-6" />,
-      title: "Brand Consistency",
-      description: "Maintain visual identity across all your content"
+      icon: <Users className="w-6 h-6" />,
+      title: "Your Characters",
+      description: "Use preset characters or upload your own"
     },
     {
-      icon: <Globe className="w-6 h-6" />,
-      title: "Multi-Platform Ready",
-      description: "Optimize for TikTok, YouTube, Instagram, and more"
+      icon: <Zap className="w-6 h-6" />,
+      title: "Fast Generation",
+      description: "Create short video clips in minutes"
     },
     {
       icon: <TrendingUp className="w-6 h-6" />,
-      title: "Data-Driven Results",
-      description: "Get AI predictions to maximize engagement"
+      title: "Professional Quality",
+      description: "Powered by Google's advanced Veo AI"
     }
   ];
 
@@ -237,19 +237,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
-              Create Professional
+              Bring Characters to Life
               <br />
               <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                AI Videos
-              </span>
-              <br />
-              <span className="text-4xl md:text-5xl lg:text-6xl text-white/80">
-                From Text Prompts
+                With AI Cameos
               </span>
             </h1>
 
             <p className="text-lg md:text-xl lg:text-2xl text-gray-400 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Smart Cameos transforms your ideas into stunning videos using Google's Veo AI. Generate, analyze, and optimize video content with powerful AI tools built for creators, marketers, and businesses.
+              Create short video clips where your chosen character performs any action you describe. Select from preset characters or upload your own, then watch them come to life with Google's Veo AI technology.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

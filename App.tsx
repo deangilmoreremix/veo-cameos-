@@ -442,7 +442,7 @@ const App: React.FC = () => {
                     </div>
                     <div>
                       <h1 className="font-bold text-2xl text-white tracking-wide">Smart Cameos</h1>
-                      <p className="text-xs text-white/60">AI-Powered Video Generation Platform</p>
+                      <p className="text-xs text-white/60">Create character-driven videos from text prompts</p>
                     </div>
                 </div>
 
