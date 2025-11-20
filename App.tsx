@@ -19,6 +19,7 @@ import StoryboardModal from './components/StoryboardModal';
 import RepurposingModal from './components/RepurposingModal';
 import CompetitorAnalysisModal from './components/CompetitorAnalysisModal';
 import { AuthModal } from './components/AuthModal';
+import { LandingPage } from './components/LandingPage';
 import { generateVideo } from './services/geminiService';
 import { creditService } from './services/creditService';
 import { generationService } from './services/generationService';
@@ -117,32 +118,39 @@ const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [userProfile, setUserProfile] = useState<any>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showLanding, setShowLanding] = useState(true);
 
   useEffect(() => {
     checkAuth();
-    loadUserData();
-    loadGenerations();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      (async () => {
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          await loadUserProfile(session.user.id);
-          await loadGenerations();
-        }
-      })();
-    });
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      loadUserData();
+      loadGenerations();
+    }
+  }, [user]);
+
   const checkAuth = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    setUser(session?.user ?? null);
-    if (session?.user) {
-      await loadUserProfile(session.user.id);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        await loadUserProfile(session.user.id);
+        setShowLanding(false);
+      }
+
+      const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+        (async () => {
+          setUser(session?.user ?? null);
+          if (session?.user) {
+            await loadUserProfile(session.user.id);
+            setShowLanding(false);
+          }
+        })();
+      });
+    } catch (error) {
+      console.error('Auth check failed:', error);
     }
   };
 
@@ -314,6 +322,15 @@ const App: React.FC = () => {
       await window.aistudio.openSelectKey();
     }
   };
+
+  const handleGetStarted = () => {
+    setShowLanding(false);
+    setShowAuthModal(true);
+  };
+
+  if (showLanding) {
+    return <LandingPage onGetStarted={handleGetStarted} />;
+  }
 
   return (
     <div className="h-screen w-screen bg-black text-white flex flex-col overflow-hidden font-sans selection:bg-white/20 selection:text-white">
