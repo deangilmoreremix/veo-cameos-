@@ -8,9 +8,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import ApiKeyDialog from './components/ApiKeyDialog';
 import BottomPromptBar from './components/BottomPromptBar';
 import VideoCard from './components/VideoCard';
+import CreditDisplay from './components/CreditDisplay';
+import PricingModal from './components/PricingModal';
+import LibraryModal from './components/LibraryModal';
 import { generateVideo } from './services/geminiService';
+import { creditService } from './services/creditService';
+import { generationService } from './services/generationService';
 import { FeedPost, GenerateVideoParams, PostStatus } from './types';
-import { Clapperboard } from 'lucide-react';
+import { Clapperboard, Library } from 'lucide-react';
 
 // Extend Window interface for AI Studio helper
 declare global {
@@ -86,8 +91,24 @@ const App: React.FC = () => {
   const [feed, setFeed] = useState<FeedPost[]>(sampleVideos);
   const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
   const [errorToast, setErrorToast] = useState<string | null>(null);
+  const [credits, setCredits] = useState<number>(10);
+  const [showPricingModal, setShowPricingModal] = useState(false);
+  const [showLibraryModal, setShowLibraryModal] = useState(false);
+  const [generations, setGenerations] = useState<any[]>([]);
+  const mockUserId = 'demo-user';
 
-  // Auto-dismiss error toast
+  useEffect(() => {
+    loadUserData();
+  }, []);
+
+  const loadUserData = async () => {
+    setCredits(10);
+  };
+
+  const loadGenerations = async () => {
+    setGenerations([]);
+  };
+
   useEffect(() => {
     if (errorToast) {
       const timer = setTimeout(() => setErrorToast(null), 5000);
@@ -123,8 +144,23 @@ const App: React.FC = () => {
     }
   };
 
+  const handlePurchase = async (tierId: string, credits: number, price: number) => {
+    setCredits(prev => prev + credits);
+    setShowPricingModal(false);
+    setErrorToast(`Successfully added ${credits} credits!`);
+  };
+
+  const handleDeleteGeneration = async (id: string) => {
+    setGenerations(prev => prev.filter(g => g.id !== id));
+  };
+
   const handleGenerate = useCallback(async (params: GenerateVideoParams) => {
-    // API Key Check - deferred until generation attempt
+    if (credits < 1) {
+      setShowPricingModal(true);
+      setErrorToast('Insufficient credits. Please purchase more credits to continue.');
+      return;
+    }
+
     if (window.aistudio) {
       try {
         if (!(await window.aistudio.hasSelectedApiKey())) {
@@ -136,6 +172,8 @@ const App: React.FC = () => {
         return;
       }
     }
+
+    setCredits(prev => prev - 1);
 
     const newPostId = Date.now().toString();
     const refImage = params.referenceImages?.[0]?.base64;
@@ -157,7 +195,7 @@ const App: React.FC = () => {
     // Start generation in background
     processGeneration(newPostId, params);
 
-  }, []);
+  }, [credits]);
 
   const handleApiKeyDialogContinue = async () => {
     setShowApiKeyDialog(false);
@@ -171,6 +209,20 @@ const App: React.FC = () => {
       {showApiKeyDialog && (
         <ApiKeyDialog onContinue={handleApiKeyDialogContinue} />
       )}
+
+      <PricingModal
+        isOpen={showPricingModal}
+        onClose={() => setShowPricingModal(false)}
+        onPurchase={handlePurchase}
+      />
+
+      <LibraryModal
+        isOpen={showLibraryModal}
+        onClose={() => setShowLibraryModal(false)}
+        generations={generations}
+        onDelete={handleDeleteGeneration}
+        onRefresh={loadGenerations}
+      />
       
       {/* Error Toast */}
       <AnimatePresence>
@@ -203,14 +255,20 @@ const App: React.FC = () => {
                     <h1 className="font-bogle text-3xl text-white tracking-wide drop-shadow-sm">VEO CAMEOS</h1>
                 </div>
 
-                <a 
-                    href="https://x.com/ammaar" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="font-bogle text-sm font-medium text-white/60 hover:text-white transition-colors tracking-wide"
-                >
-                    created by @ammaar
-                </a>
+                <div className="flex items-center gap-4">
+                    <button
+                      onClick={() => setShowLibraryModal(true)}
+                      className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl hover:bg-white/10 transition-all text-white"
+                    >
+                      <Library className="w-4 h-4" />
+                      <span className="text-sm font-medium">Library</span>
+                    </button>
+
+                    <CreditDisplay
+                      credits={credits}
+                      onPurchase={() => setShowPricingModal(true)}
+                    />
+                </div>
             </div>
         </header>
 
