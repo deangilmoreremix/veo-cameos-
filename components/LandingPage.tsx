@@ -32,8 +32,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   const features = [
     {
       icon: <Video className="w-8 h-8" />,
-      title: "Character-Driven Videos",
-      description: "Create Cameos with preset or custom characters performing actions from your text prompts",
+      title: "Personalized Character Cameos",
+      description: "Create personalized cameos with preset or custom characters performing actions from your text prompts",
       color: "from-blue-500 to-cyan-500"
     },
     {
@@ -51,19 +51,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
     {
       icon: <Palette className="w-8 h-8" />,
       title: "Style Transfer",
-      description: "Apply consistent visual styles across multiple character Cameos",
+      description: "Apply consistent visual styles across multiple personalized cameos",
       color: "from-teal-500 to-cyan-500"
     },
     {
       icon: <BarChart className="w-8 h-8" />,
       title: "Video Analysis",
-      description: "Analyze your Cameos and get AI insights on performance and engagement",
+      description: "Analyze your personalized cameos and get AI insights on performance and engagement",
       color: "from-blue-500 to-violet-500"
     },
     {
       icon: <Zap className="w-8 h-8" />,
       title: "Quick Generation",
-      description: "Generate character-driven video clips in minutes with Google's Veo AI",
+      description: "Generate personalized character cameos in minutes with Google's Veo AI",
       color: "from-amber-500 to-orange-500"
     }
   ];
@@ -237,15 +237,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
-              Bring Characters to Life
+              Create Personalized
               <br />
               <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                With AI Cameos
+                Character Cameos with AI
               </span>
             </h1>
 
             <p className="text-lg md:text-xl lg:text-2xl text-gray-400 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Create short video clips where your chosen character performs any action you describe. Select from preset characters or upload your own, then watch them come to life with Google's Veo AI technology.
+              Create personalized video cameos where your chosen character performs any action you describe. Select from preset characters or upload your own, then watch them come to life with Google's Veo AI technology.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -352,9 +352,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Why Choose VEO CAMEOS?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Why Choose Smart Cameos?</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Built for creators who demand quality, speed, and results
+              Built for creators who want personalized character-driven videos with AI
             </p>
           </motion.div>
 
@@ -506,7 +506,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               Ready to Transform Your Content?
             </h2>
             <p className="text-xl text-gray-400 mb-12">
-              Join thousands of creators using AI to produce amazing videos
+              Join thousands of creators using AI to produce personalized character cameos
             </p>
             <button
               onClick={onGetStarted}
