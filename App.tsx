@@ -13,11 +13,16 @@ import PricingModal from './components/PricingModal';
 import LibraryModal from './components/LibraryModal';
 import ScriptGeneratorModal from './components/ScriptGeneratorModal';
 import AIToolsHub from './components/AIToolsHub';
+import VideoAnalysisModal from './components/VideoAnalysisModal';
+import StyleTransferModal from './components/StyleTransferModal';
+import StoryboardModal from './components/StoryboardModal';
+import RepurposingModal from './components/RepurposingModal';
+import CompetitorAnalysisModal from './components/CompetitorAnalysisModal';
 import { generateVideo } from './services/geminiService';
 import { creditService } from './services/creditService';
 import { generationService } from './services/generationService';
 import { FeedPost, GenerateVideoParams, PostStatus } from './types';
-import { Clapperboard, Library, FileText, Sparkles } from 'lucide-react';
+import { Clapperboard, Library, FileText, Sparkles, ChevronDown, Search, Palette, Film, RefreshCw, Target } from 'lucide-react';
 
 // Extend Window interface for AI Studio helper
 declare global {
@@ -98,6 +103,12 @@ const App: React.FC = () => {
   const [showLibraryModal, setShowLibraryModal] = useState(false);
   const [showScriptGenerator, setShowScriptGenerator] = useState(false);
   const [showAITools, setShowAITools] = useState(false);
+  const [showVideoAnalysis, setShowVideoAnalysis] = useState(false);
+  const [showStyleTransfer, setShowStyleTransfer] = useState(false);
+  const [showStoryboard, setShowStoryboard] = useState(false);
+  const [showRepurposing, setShowRepurposing] = useState(false);
+  const [showCompetitor, setShowCompetitor] = useState(false);
+  const [showToolsMenu, setShowToolsMenu] = useState(false);
   const [generations, setGenerations] = useState<any[]>([]);
   const [promptFromScript, setPromptFromScript] = useState<string>('');
   const mockUserId = 'demo-user';
@@ -258,6 +269,35 @@ const App: React.FC = () => {
         onClose={() => setShowAITools(false)}
         onUsePrompt={(prompt) => setPromptFromScript(prompt)}
       />
+
+      <VideoAnalysisModal
+        isOpen={showVideoAnalysis}
+        onClose={() => setShowVideoAnalysis(false)}
+      />
+
+      <StyleTransferModal
+        isOpen={showStyleTransfer}
+        onClose={() => setShowStyleTransfer(false)}
+        onUseStyle={(prompt) => setPromptFromScript(prompt)}
+      />
+
+      <StoryboardModal
+        isOpen={showStoryboard}
+        onClose={() => setShowStoryboard(false)}
+        onUseFrame={(prompt) => setPromptFromScript(prompt)}
+      />
+
+      <RepurposingModal
+        isOpen={showRepurposing}
+        onClose={() => setShowRepurposing(false)}
+        onUseVariation={(prompt) => setPromptFromScript(prompt)}
+      />
+
+      <CompetitorAnalysisModal
+        isOpen={showCompetitor}
+        onClose={() => setShowCompetitor(false)}
+        onUseSuggestion={(prompt) => setPromptFromScript(prompt)}
+      />
       
       {/* Error Toast */}
       <AnimatePresence>
@@ -291,21 +331,93 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <button
-                      onClick={() => setShowAITools(true)}
-                      className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full backdrop-blur-xl transition-all text-white shadow-lg shadow-purple-500/20"
-                    >
-                      <Sparkles className="w-4 h-4" />
-                      <span className="text-sm font-medium">AI Tools</span>
-                    </button>
+                    <div className="relative">
+                      <button
+                        onClick={() => setShowToolsMenu(!showToolsMenu)}
+                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full backdrop-blur-xl transition-all text-white shadow-lg shadow-purple-500/20"
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        <span className="text-sm font-medium">AI Tools</span>
+                        <ChevronDown className="w-3 h-3" />
+                      </button>
 
-                    <button
-                      onClick={() => setShowScriptGenerator(true)}
-                      className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl hover:bg-white/10 transition-all text-white"
-                    >
-                      <FileText className="w-4 h-4" />
-                      <span className="text-sm font-medium">Script</span>
-                    </button>
+                      {showToolsMenu && (
+                        <div className="absolute top-full right-0 mt-2 w-64 bg-neutral-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50">
+                          <div className="p-2 space-y-1">
+                            <button
+                              onClick={() => { setShowAITools(true); setShowToolsMenu(false); }}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/5 rounded-xl transition-all text-left"
+                            >
+                              <Target className="w-5 h-5 text-purple-400" />
+                              <div>
+                                <div className="font-semibold text-sm">Campaign Builder</div>
+                                <div className="text-xs text-white/60">Multi-video campaigns</div>
+                              </div>
+                            </button>
+                            <button
+                              onClick={() => { setShowScriptGenerator(true); setShowToolsMenu(false); }}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/5 rounded-xl transition-all text-left"
+                            >
+                              <FileText className="w-5 h-5 text-blue-400" />
+                              <div>
+                                <div className="font-semibold text-sm">Script Generator</div>
+                                <div className="text-xs text-white/60">AI-written scenes</div>
+                              </div>
+                            </button>
+                            <button
+                              onClick={() => { setShowStoryboard(true); setShowToolsMenu(false); }}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/5 rounded-xl transition-all text-left"
+                            >
+                              <Film className="w-5 h-5 text-indigo-400" />
+                              <div>
+                                <div className="font-semibold text-sm">Storyboard</div>
+                                <div className="text-xs text-white/60">Frame-by-frame planning</div>
+                              </div>
+                            </button>
+                            <button
+                              onClick={() => { setShowVideoAnalysis(true); setShowToolsMenu(false); }}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/5 rounded-xl transition-all text-left"
+                            >
+                              <Search className="w-5 h-5 text-cyan-400" />
+                              <div>
+                                <div className="font-semibold text-sm">Video Analysis</div>
+                                <div className="text-xs text-white/60">Quality insights</div>
+                              </div>
+                            </button>
+                            <button
+                              onClick={() => { setShowStyleTransfer(true); setShowToolsMenu(false); }}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/5 rounded-xl transition-all text-left"
+                            >
+                              <Palette className="w-5 h-5 text-pink-400" />
+                              <div>
+                                <div className="font-semibold text-sm">Style Transfer</div>
+                                <div className="text-xs text-white/60">Extract & reuse styles</div>
+                              </div>
+                            </button>
+                            <button
+                              onClick={() => { setShowRepurposing(true); setShowToolsMenu(false); }}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/5 rounded-xl transition-all text-left"
+                            >
+                              <RefreshCw className="w-5 h-5 text-green-400" />
+                              <div>
+                                <div className="font-semibold text-sm">Repurposing</div>
+                                <div className="text-xs text-white/60">Multi-platform adapt</div>
+                              </div>
+                            </button>
+                            <button
+                              onClick={() => { setShowCompetitor(true); setShowToolsMenu(false); }}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/5 rounded-xl transition-all text-left"
+                            >
+                              <Target className="w-5 h-5 text-orange-400" />
+                              <div>
+                                <div className="font-semibold text-sm">Competitor Intel</div>
+                                <div className="text-xs text-white/60">Analyze & differentiate</div>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
 
                     <button
                       onClick={() => setShowLibraryModal(true)}
