@@ -99,6 +99,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     loadUserData();
+    loadGenerations();
   }, []);
 
   const loadUserData = async () => {
@@ -106,7 +107,8 @@ const App: React.FC = () => {
   };
 
   const loadGenerations = async () => {
-    setGenerations([]);
+    const userGenerations = await generationService.getUserGenerations(mockUserId);
+    setGenerations(userGenerations);
   };
 
   useEffect(() => {
@@ -124,18 +126,28 @@ const App: React.FC = () => {
     );
   };
 
-  const processGeneration = async (postId: string, params: GenerateVideoParams) => {
+  const processGeneration = async (postId: string, params: GenerateVideoParams, generationId: string | null) => {
     try {
       const { url } = await generateVideo(params);
       updateFeedPost(postId, { videoUrl: url, status: PostStatus.SUCCESS });
+
+      if (generationId) {
+        await generationService.updateGenerationSuccess(generationId, url);
+        loadGenerations();
+      }
     } catch (error) {
       console.error('Video generation failed:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error.';
       updateFeedPost(postId, { status: PostStatus.ERROR, errorMessage: errorMessage });
-      
+
+      if (generationId) {
+        await generationService.updateGenerationError(generationId, errorMessage);
+        loadGenerations();
+      }
+
       // Global error toast for specific API key issues
       if (typeof errorMessage === 'string' && (
-          errorMessage.includes('API_KEY_INVALID') || 
+          errorMessage.includes('API_KEY_INVALID') ||
           errorMessage.includes('permission denied') ||
           errorMessage.includes('Requested entity was not found')
       )) {
@@ -151,7 +163,10 @@ const App: React.FC = () => {
   };
 
   const handleDeleteGeneration = async (id: string) => {
-    setGenerations(prev => prev.filter(g => g.id !== id));
+    const success = await generationService.deleteGeneration(id);
+    if (success) {
+      setGenerations(prev => prev.filter(g => g.id !== id));
+    }
   };
 
   const handleGenerate = useCallback(async (params: GenerateVideoParams) => {
@@ -189,11 +204,14 @@ const App: React.FC = () => {
       referenceImageBase64: refImage,
     };
 
+    // Create generation record in database
+    const generationId = await generationService.createGeneration(mockUserId, params);
+
     // Prepend to feed immediately
     setFeed(prev => [newPost, ...prev]);
 
     // Start generation in background
-    processGeneration(newPostId, params);
+    processGeneration(newPostId, params, generationId);
 
   }, [credits]);
 
