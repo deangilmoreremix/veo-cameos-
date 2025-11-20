@@ -71,8 +71,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           {mode === 'reset' && 'Reset Password'}
         </h2>
         <p className="text-gray-400 mb-8">
-          {mode === 'login' && 'Sign in to continue creating amazing videos'}
-          {mode === 'signup' && 'Start creating AI-powered videos today'}
+          {mode === 'login' && 'Sign in to continue creating personalized cameos'}
+          {mode === 'signup' && 'Start creating personalized cameos with AI today'}
           {mode === 'reset' && 'Enter your email to receive a password reset link'}
         </p>
 
