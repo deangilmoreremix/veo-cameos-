@@ -637,16 +637,18 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      <EnhancedBottomPromptBar
-        onGenerate={handleGenerate}
-        initialPrompt={promptFromScript}
-        onPromptUsed={() => setPromptFromScript('')}
-        onToolOpen={handleToolOpen}
-        userId={user?.id}
-        platformMode={selectedPlatform}
-        campaignMode={campaignMode}
-        selectedStylePresetId={selectedStylePreset}
-      />
+      {!showAuthModal && user && (
+        <EnhancedBottomPromptBar
+          onGenerate={handleGenerate}
+          initialPrompt={promptFromScript}
+          onPromptUsed={() => setPromptFromScript('')}
+          onToolOpen={handleToolOpen}
+          userId={user?.id}
+          platformMode={selectedPlatform}
+          campaignMode={campaignMode}
+          selectedStylePresetId={selectedStylePreset}
+        />
+      )}
 
       {showPerformanceInsights && user && (
         <div className="fixed bottom-24 right-6 z-40 w-96">
