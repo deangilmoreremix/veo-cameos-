@@ -23,7 +23,7 @@ BEGIN
   VALUES (
     new.id,
     COALESCE(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1)),
-    100
+    30
   )
   ON CONFLICT (id) DO NOTHING;
   RETURN new;

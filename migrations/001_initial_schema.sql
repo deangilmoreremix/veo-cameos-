@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS user_profiles (
   id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   username text UNIQUE NOT NULL,
   avatar_url text DEFAULT '',
-  credits integer DEFAULT 100 NOT NULL CHECK (credits >= 0),
+  credits integer DEFAULT 30 NOT NULL CHECK (credits >= 0),
   total_spent numeric DEFAULT 0 NOT NULL CHECK (total_spent >= 0),
   created_at timestamptz DEFAULT now() NOT NULL,
   updated_at timestamptz DEFAULT now() NOT NULL
@@ -537,7 +537,7 @@ BEGIN
   VALUES (
     new.id,
     COALESCE(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1)),
-    100
+    30
   )
   ON CONFLICT (id) DO NOTHING;
   RETURN new;
