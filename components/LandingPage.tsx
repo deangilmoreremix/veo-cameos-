@@ -403,19 +403,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
                     </div>
                   </div>
 
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent transition-opacity"
-                  >
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <p className="text-white font-semibold mb-1">{demo.description}</p>
-                      <p className="text-gray-400 text-sm">by @{demo.creator}</p>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
+                    <div className="flex items-start gap-2 mb-2">
+                      <div className="px-2 py-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded text-xs font-semibold whitespace-nowrap">
+                        Veo AI
+                      </div>
                     </div>
-                  </motion.div>
-
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full text-xs font-semibold shadow-lg">
-                    Veo AI
+                    <p className="text-white text-sm leading-relaxed">"{demo.description}"</p>
                   </div>
                 </div>
               </motion.div>
