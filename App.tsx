@@ -33,7 +33,7 @@ import { creditService } from './services/creditService';
 import { generationService } from './services/generationService';
 import { supabase } from './services/supabaseClient';
 import { FeedPost, GenerateVideoParams, PostStatus } from './types';
-import { Clapperboard, Library, FileText, Sparkles, ChevronDown, Search, Palette, Film, RefreshCw, Target, LogOut, User } from 'lucide-react';
+import { Clapperboard, Library, FileText, Sparkles, ChevronDown, Search, Palette, Film, RefreshCw, Target, LogOut, User, TrendingUp } from 'lucide-react';
 
 // Extend Window interface for AI Studio helper
 declare global {
