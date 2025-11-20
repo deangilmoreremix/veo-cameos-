@@ -7,7 +7,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useAuth } from './contexts/AuthContext';
 import ApiKeyDialog from './components/ApiKeyDialog';
-import BottomPromptBar from './components/BottomPromptBar';
+import EnhancedBottomPromptBar from './components/EnhancedBottomPromptBar';
+import { UnifiedToolPanel } from './components/UnifiedToolPanel';
+import { CampaignBuilderModal } from './components/CampaignBuilderModal';
+import { PerformanceInsightsPanel } from './components/PerformanceInsightsPanel';
+import { PlatformStyleSelector } from './components/PlatformStyleSelector';
+import { CampaignConcept } from './services/campaignService';
+import { performanceTrackingService } from './services/performanceTrackingService';
 import VideoCard from './components/VideoCard';
 import CreditDisplay from './components/CreditDisplay';
 import PricingModal from './components/PricingModal';
@@ -120,6 +126,13 @@ const App: React.FC = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showLanding, setShowLanding] = useState(!user);
+  const [showUnifiedToolPanel, setShowUnifiedToolPanel] = useState(false);
+  const [showCampaignBuilder, setShowCampaignBuilder] = useState(false);
+  const [showPerformanceInsights, setShowPerformanceInsights] = useState(false);
+  const [selectedPlatform, setSelectedPlatform] = useState('instagram');
+  const [selectedStylePreset, setSelectedStylePreset] = useState<string | null>(null);
+  const [campaignMode, setCampaignMode] = useState(false);
+  const [toolContext, setToolContext] = useState<'pre-generation' | 'post-generation' | 'campaign-planning'>('pre-generation');
 
   useEffect(() => {
     if (user) {
@@ -250,7 +263,6 @@ const App: React.FC = () => {
     const newPostId = Date.now().toString();
     const refImage = params.referenceImages?.[0]?.base64;
 
-    // Create new post object with GENERATING status
     const newPost: FeedPost = {
       id: newPostId,
       username: 'you',
@@ -261,16 +273,23 @@ const App: React.FC = () => {
       referenceImageBase64: refImage,
     };
 
-    // Create generation record in database
     const generationId = await generationService.createGeneration(user.id, params);
 
-    // Prepend to feed immediately
-    setFeed(prev => [newPost, ...prev]);
+    await performanceTrackingService.createPerformanceMetric(user.id, {
+      generation_id: generationId || undefined,
+      prompt: params.prompt,
+      platform: selectedPlatform,
+      predicted_score: 75,
+      quality_score: 0,
+      style_consistency: 0,
+      brand_compliance: 0,
+      improvements: []
+    });
 
-    // Start generation in background
+    setFeed(prev => [newPost, ...prev]);
     processGeneration(newPostId, params, generationId);
 
-  }, [profile, user, refreshProfile]);
+  }, [profile, user, refreshProfile, selectedPlatform]);
 
   const handleApiKeyDialogContinue = async () => {
     setShowApiKeyDialog(false);
@@ -282,6 +301,46 @@ const App: React.FC = () => {
   const handleGetStarted = () => {
     setShowLanding(false);
     setShowAuthModal(true);
+  };
+
+  const handleToolOpen = (toolName: string) => {
+    setShowUnifiedToolPanel(false);
+    switch (toolName) {
+      case 'Campaign Builder':
+        setShowCampaignBuilder(true);
+        setToolContext('campaign-planning');
+        break;
+      case 'Script Generator':
+        setShowScriptGenerator(true);
+        break;
+      case 'Storyboard':
+        setShowStoryboard(true);
+        break;
+      case 'Video Analysis':
+        setShowVideoAnalysis(true);
+        break;
+      case 'Style Transfer':
+        setShowStyleTransfer(true);
+        break;
+      case 'Repurposing':
+        setShowRepurposing(true);
+        break;
+      case 'Brand Guidelines':
+        setShowBrandGuidelines(true);
+        break;
+      case 'Competitor Analysis':
+        setShowCompetitor(true);
+        break;
+      case 'AI Tools':
+        setShowAITools(true);
+        break;
+    }
+  };
+
+  const handleGenerateConcept = async (concept: CampaignConcept) => {
+    setPromptFromScript(concept.prompt);
+    setSelectedPlatform(concept.platform);
+    setShowCampaignBuilder(false);
   };
 
   if (showLanding) {
@@ -362,6 +421,21 @@ const App: React.FC = () => {
           setErrorToast('Successfully signed in!');
           setShowLanding(false);
         }}
+      />
+
+      <UnifiedToolPanel
+        isOpen={showUnifiedToolPanel}
+        onClose={() => setShowUnifiedToolPanel(false)}
+        currentPrompt={promptFromScript}
+        context={toolContext}
+        onToolSelect={handleToolOpen}
+      />
+
+      <CampaignBuilderModal
+        isOpen={showCampaignBuilder}
+        onClose={() => setShowCampaignBuilder(false)}
+        userId={user?.id || null}
+        onGenerateConcept={handleGenerateConcept}
       />
       
       {/* Error Toast */}
@@ -535,6 +609,14 @@ const App: React.FC = () => {
                       <span className="text-sm font-medium">Library</span>
                     </button>
 
+                    <button
+                      onClick={() => setShowPerformanceInsights(!showPerformanceInsights)}
+                      className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl hover:bg-white/10 transition-all text-white"
+                    >
+                      <TrendingUp className="w-4 h-4" />
+                      <span className="text-sm font-medium">Insights</span>
+                    </button>
+
                     <CreditDisplay
                       credits={profile?.credits || 0}
                       onPurchase={() => setShowPricingModal(true)}
@@ -555,11 +637,26 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      <BottomPromptBar
+      <EnhancedBottomPromptBar
         onGenerate={handleGenerate}
         initialPrompt={promptFromScript}
         onPromptUsed={() => setPromptFromScript('')}
+        onToolOpen={handleToolOpen}
+        userId={user?.id}
+        platformMode={selectedPlatform}
+        campaignMode={campaignMode}
+        selectedStylePresetId={selectedStylePreset}
       />
+
+      {showPerformanceInsights && user && (
+        <div className="fixed bottom-24 right-6 z-40 w-96">
+          <PerformanceInsightsPanel
+            userId={user.id}
+            isVisible={showPerformanceInsights}
+            onClose={() => setShowPerformanceInsights(false)}
+          />
+        </div>
+      )}
     </div>
   );
 };
