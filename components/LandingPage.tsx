@@ -332,37 +332,37 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                beforeImage: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=400',
+                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=alisa&backgroundColor=b6e3f4',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-alisa.mp4',
                 description: 'Sipping coffee at a Parisian cafe',
                 creator: 'alisa_fortin'
               },
               {
-                beforeImage: 'https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=400',
+                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=omar&backgroundColor=c0aede',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-omar.mp4',
                 description: 'At a llama petting zoo',
                 creator: 'osanseviero'
               },
               {
-                beforeImage: 'https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&w=400',
+                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=ammaar&backgroundColor=ffdfbf',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-ammaar.mp4',
                 description: 'At a red carpet ceremony',
                 creator: 'ammaar'
               },
               {
-                beforeImage: 'https://images.pexels.com/photos/943096/pexels-photo-943096.jpeg?auto=compress&cs=tinysrgb&w=400',
+                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=logan&backgroundColor=ffd5dc',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-logan.mp4',
                 description: 'Vibe coding on a mountain',
                 creator: 'OfficialLoganK'
               },
               {
-                beforeImage: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=400',
+                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=kat&backgroundColor=d1d4f9',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-kat.mp4',
                 description: 'Exploring a majestic temple',
                 creator: 'kat_kampf'
               },
               {
-                beforeImage: 'https://images.pexels.com/photos/2467506/pexels-photo-2467506.jpeg?auto=compress&cs=tinysrgb&w=400',
+                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=josh&backgroundColor=c6f6d5',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-josh.mp4',
                 description: 'On the Google Keynote stage',
                 creator: 'joshwoodward'
