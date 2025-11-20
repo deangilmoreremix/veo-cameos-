@@ -202,7 +202,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center">
                 <Clapperboard className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-bold tracking-wide">VEO CAMEOS</span>
+              <span className="text-2xl font-bold tracking-wide">Smart Cameos</span>
             </div>
             <button
               onClick={onGetStarted}
@@ -237,19 +237,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
-              Create Stunning
+              Create Professional
               <br />
               <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-cyan-400 bg-clip-text text-transparent">
                 AI Videos
               </span>
               <br />
               <span className="text-4xl md:text-5xl lg:text-6xl text-white/80">
-                In Minutes
+                From Text Prompts
               </span>
             </h1>
 
             <p className="text-lg md:text-xl lg:text-2xl text-gray-400 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Transform your ideas into professional videos with AI. Generate, edit, and optimize content with cutting-edge technology designed for creators and businesses.
+              Smart Cameos transforms your ideas into stunning videos using Google's Veo AI. Generate, analyze, and optimize video content with powerful AI tools built for creators, marketers, and businesses.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -530,10 +530,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center">
                 <Clapperboard className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold">VEO CAMEOS</span>
+              <span className="text-xl font-bold">Smart Cameos</span>
             </div>
             <div className="text-gray-400 text-sm">
-              © 2025 VEO CAMEOS. Powered by Google Veo AI.
+              © 2025 Smart Cameos. Powered by Google Veo AI.
             </div>
           </div>
         </div>

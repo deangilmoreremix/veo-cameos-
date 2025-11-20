@@ -436,9 +436,14 @@ const App: React.FC = () => {
             <div className="absolute inset-0 bg-black/20 backdrop-blur-xl mask-image-linear-gradient-to-b" />
             
             <div className="relative flex items-center justify-between text-white pointer-events-auto max-w-[1600px] mx-auto w-full">
-                <div className="flex items-center gap-3.5">
-                    <Clapperboard className="w-8 h-8 text-white" />
-                    <h1 className="font-bogle text-3xl text-white tracking-wide drop-shadow-sm">VEO CAMEOS</h1>
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center">
+                      <Clapperboard className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h1 className="font-bold text-2xl text-white tracking-wide">Smart Cameos</h1>
+                      <p className="text-xs text-white/60">AI-Powered Video Generation Platform</p>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-4">
