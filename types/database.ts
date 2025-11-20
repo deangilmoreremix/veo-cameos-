@@ -149,6 +149,50 @@ export interface Database {
           created_at?: string
         }
       }
+      brand_guidelines: {
+        Row: {
+          id: string
+          user_id: string
+          brand_name: string
+          values: string[]
+          tone_of_voice: string[]
+          visual_style: string
+          do_list: string[]
+          dont_list: string[]
+          color_palette: string[]
+          fonts: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          brand_name: string
+          values?: string[]
+          tone_of_voice?: string[]
+          visual_style?: string
+          do_list?: string[]
+          dont_list?: string[]
+          color_palette?: string[]
+          fonts?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          brand_name?: string
+          values?: string[]
+          tone_of_voice?: string[]
+          visual_style?: string
+          do_list?: string[]
+          dont_list?: string[]
+          color_palette?: string[]
+          fonts?: string
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
     Views: {}
     Functions: {}

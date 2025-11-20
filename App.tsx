@@ -18,6 +18,7 @@ import StyleTransferModal from './components/StyleTransferModal';
 import StoryboardModal from './components/StoryboardModal';
 import RepurposingModal from './components/RepurposingModal';
 import CompetitorAnalysisModal from './components/CompetitorAnalysisModal';
+import BrandGuidelinesModal from './components/BrandGuidelinesModal';
 import { AuthModal } from './components/AuthModal';
 import { LandingPage } from './components/LandingPage';
 import { generateVideo } from './services/geminiService';
@@ -111,6 +112,7 @@ const App: React.FC = () => {
   const [showStoryboard, setShowStoryboard] = useState(false);
   const [showRepurposing, setShowRepurposing] = useState(false);
   const [showCompetitor, setShowCompetitor] = useState(false);
+  const [showBrandGuidelines, setShowBrandGuidelines] = useState(false);
   const [showToolsMenu, setShowToolsMenu] = useState(false);
   const [generations, setGenerations] = useState<any[]>([]);
   const [promptFromScript, setPromptFromScript] = useState<string>('');
@@ -393,6 +395,12 @@ const App: React.FC = () => {
         onUseSuggestion={(prompt) => setPromptFromScript(prompt)}
       />
 
+      <BrandGuidelinesModal
+        isOpen={showBrandGuidelines}
+        onClose={() => setShowBrandGuidelines(false)}
+        userId={user?.id || null}
+      />
+
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
@@ -551,6 +559,14 @@ const App: React.FC = () => {
                         </div>
                       )}
                     </div>
+
+                    <button
+                      onClick={() => setShowBrandGuidelines(true)}
+                      className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl hover:bg-white/10 transition-all text-white"
+                    >
+                      <Palette className="w-4 h-4" />
+                      <span className="text-sm font-medium">Brand</span>
+                    </button>
 
                     <button
                       onClick={() => setShowLibraryModal(true)}
