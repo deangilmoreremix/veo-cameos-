@@ -11,11 +11,13 @@ import VideoCard from './components/VideoCard';
 import CreditDisplay from './components/CreditDisplay';
 import PricingModal from './components/PricingModal';
 import LibraryModal from './components/LibraryModal';
+import ScriptGeneratorModal from './components/ScriptGeneratorModal';
+import AIToolsHub from './components/AIToolsHub';
 import { generateVideo } from './services/geminiService';
 import { creditService } from './services/creditService';
 import { generationService } from './services/generationService';
 import { FeedPost, GenerateVideoParams, PostStatus } from './types';
-import { Clapperboard, Library } from 'lucide-react';
+import { Clapperboard, Library, FileText, Sparkles } from 'lucide-react';
 
 // Extend Window interface for AI Studio helper
 declare global {
@@ -94,7 +96,10 @@ const App: React.FC = () => {
   const [credits, setCredits] = useState<number>(10);
   const [showPricingModal, setShowPricingModal] = useState(false);
   const [showLibraryModal, setShowLibraryModal] = useState(false);
+  const [showScriptGenerator, setShowScriptGenerator] = useState(false);
+  const [showAITools, setShowAITools] = useState(false);
   const [generations, setGenerations] = useState<any[]>([]);
+  const [promptFromScript, setPromptFromScript] = useState<string>('');
   const mockUserId = 'demo-user';
 
   useEffect(() => {
@@ -241,6 +246,18 @@ const App: React.FC = () => {
         onDelete={handleDeleteGeneration}
         onRefresh={loadGenerations}
       />
+
+      <ScriptGeneratorModal
+        isOpen={showScriptGenerator}
+        onClose={() => setShowScriptGenerator(false)}
+        onUseScene={(scene) => setPromptFromScript(scene)}
+      />
+
+      <AIToolsHub
+        isOpen={showAITools}
+        onClose={() => setShowAITools(false)}
+        onUsePrompt={(prompt) => setPromptFromScript(prompt)}
+      />
       
       {/* Error Toast */}
       <AnimatePresence>
@@ -275,6 +292,22 @@ const App: React.FC = () => {
 
                 <div className="flex items-center gap-4">
                     <button
+                      onClick={() => setShowAITools(true)}
+                      className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full backdrop-blur-xl transition-all text-white shadow-lg shadow-purple-500/20"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      <span className="text-sm font-medium">AI Tools</span>
+                    </button>
+
+                    <button
+                      onClick={() => setShowScriptGenerator(true)}
+                      className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl hover:bg-white/10 transition-all text-white"
+                    >
+                      <FileText className="w-4 h-4" />
+                      <span className="text-sm font-medium">Script</span>
+                    </button>
+
+                    <button
                       onClick={() => setShowLibraryModal(true)}
                       className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl hover:bg-white/10 transition-all text-white"
                     >
@@ -302,7 +335,11 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      <BottomPromptBar onGenerate={handleGenerate} />
+      <BottomPromptBar
+        onGenerate={handleGenerate}
+        initialPrompt={promptFromScript}
+        onPromptUsed={() => setPromptFromScript('')}
+      />
     </div>
   );
 };

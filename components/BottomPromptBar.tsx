@@ -6,7 +6,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useRef, useState, useEffect } from 'react';
 import { AspectRatio, CameoProfile, GenerateVideoParams, GenerationMode, ImageFile, Resolution, VeoModel } from '../types';
-import { ArrowUp, Plus, User } from 'lucide-react';
+import { ArrowUp, Plus, User, Sparkles } from 'lucide-react';
+import PromptEnhancer from './PromptEnhancer';
 
 // Use PNG for cameos to ensure compatibility
 const defaultCameoProfiles: CameoProfile[] = [
@@ -74,13 +75,16 @@ const fileToImageFile = (file: File): Promise<ImageFile> => {
 
 interface BottomPromptBarProps {
   onGenerate: (params: GenerateVideoParams) => void;
+  initialPrompt?: string;
+  onPromptUsed?: () => void;
 }
 
-const BottomPromptBar: React.FC<BottomPromptBarProps> = ({ onGenerate }) => {
+const BottomPromptBar: React.FC<BottomPromptBarProps> = ({ onGenerate, initialPrompt, onPromptUsed }) => {
   // Expanded by default
   const [isExpanded, setIsExpanded] = useState(true);
   const [prompt, setPrompt] = useState('');
   const [selectedCameoId, setSelectedCameoId] = useState<string | null>(null);
+  const [showEnhancer, setShowEnhancer] = useState(false);
   
   // Combine default and user uploaded profiles
   const [profiles, setProfiles] = useState<CameoProfile[]>(defaultCameoProfiles);
@@ -113,6 +117,20 @@ const BottomPromptBar: React.FC<BottomPromptBarProps> = ({ onGenerate }) => {
         uploadedImageUrlsRef.current.forEach(url => URL.revokeObjectURL(url));
     };
   }, []);
+
+  // Handle initial prompt from script generator
+  useEffect(() => {
+    if (initialPrompt && initialPrompt !== prompt) {
+      setPrompt(initialPrompt);
+      setIsExpanded(true);
+      if (inputRef.current) {
+        inputRef.current.style.height = 'auto';
+        inputRef.current.style.height = `${Math.min(inputRef.current.scrollHeight, 120)}px`;
+        inputRef.current.focus();
+      }
+      onPromptUsed?.();
+    }
+  }, [initialPrompt]);
 
   // Cycle through example prompts
   useEffect(() => {
@@ -267,6 +285,22 @@ const BottomPromptBar: React.FC<BottomPromptBarProps> = ({ onGenerate }) => {
 
   const selectedProfile = profiles.find(p => p.id === selectedCameoId);
 
+  const handleEnhanceClick = () => {
+    if (prompt.trim()) {
+      setShowEnhancer(true);
+    }
+  };
+
+  const handleApplyEnhancement = (enhancedPrompt: string) => {
+    setPrompt(enhancedPrompt);
+    setShowEnhancer(false);
+    if (inputRef.current) {
+      inputRef.current.style.height = 'auto';
+      inputRef.current.style.height = `${Math.min(inputRef.current.scrollHeight, 120)}px`;
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none mb-6">
       
@@ -388,6 +422,15 @@ const BottomPromptBar: React.FC<BottomPromptBarProps> = ({ onGenerate }) => {
           </div>
 
           <div className="flex items-center gap-2.5 shrink-0 pb-0.5">
+            {prompt.trim() && (
+              <button
+                onClick={handleEnhanceClick}
+                className="w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-purple-500/50"
+                title="Enhance with AI"
+              >
+                <Sparkles className="w-5 h-5" />
+              </button>
+            )}
             <AnimatePresence mode="wait">
                 {selectedCameoId && selectedProfile && (
                     <motion.div
@@ -416,6 +459,14 @@ const BottomPromptBar: React.FC<BottomPromptBarProps> = ({ onGenerate }) => {
           </div>
         </div>
       </motion.div>
+
+      {showEnhancer && (
+        <PromptEnhancer
+          prompt={prompt}
+          onApplyEnhancement={handleApplyEnhancement}
+          onClose={() => setShowEnhancer(false)}
+        />
+      )}
     </div>
   );
 };
