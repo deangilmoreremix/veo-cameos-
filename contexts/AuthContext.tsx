@@ -119,18 +119,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (error) return { error };
 
-      if (data.user) {
-        await supabase
-          .from('user_profiles')
-          .insert({
-            id: data.user.id,
-            username,
-            avatar_url: '',
-            credits: 100,
-            total_spent: 0,
-          });
-      }
-
       return { error: null };
     } catch (error) {
       return { error: error as Error };
