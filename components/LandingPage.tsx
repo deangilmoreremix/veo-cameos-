@@ -332,37 +332,37 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=alisa&backgroundColor=b6e3f4',
+                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/alisa-before.jpg',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-alisa.mp4',
                 description: 'Sipping coffee at a Parisian cafe',
                 creator: 'alisa_fortin'
               },
               {
-                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=omar&backgroundColor=c0aede',
+                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/omar-before.jpg',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-omar.mp4',
                 description: 'At a llama petting zoo',
                 creator: 'osanseviero'
               },
               {
-                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=ammaar&backgroundColor=ffdfbf',
+                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/ammaar-before.jpg',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-ammaar.mp4',
                 description: 'At a red carpet ceremony',
                 creator: 'ammaar'
               },
               {
-                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=logan&backgroundColor=ffd5dc',
+                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/logan-before.jpg',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-logan.mp4',
                 description: 'Vibe coding on a mountain',
                 creator: 'OfficialLoganK'
               },
               {
-                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=kat&backgroundColor=d1d4f9',
+                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/kat-before.jpg',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-kat.mp4',
                 description: 'Exploring a majestic temple',
                 creator: 'kat_kampf'
               },
               {
-                beforeImage: 'https://api.dicebear.com/7.x/avataaars/png?seed=josh&backgroundColor=c6f6d5',
+                beforeImage: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/josh-before.jpg',
                 videoUrl: 'https://storage.googleapis.com/sideprojects-asronline/veo-cameos/cameo-josh.mp4',
                 description: 'On the Google Keynote stage',
                 creator: 'joshwoodward'
