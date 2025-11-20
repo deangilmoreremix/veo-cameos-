@@ -367,6 +367,111 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
         </div>
       </section>
 
+      <section className="relative py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                How Smart Cameos Works
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Create professional character videos in 3 simple steps
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="text-center">
+                <div className="relative inline-block mb-6">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-3xl font-bold">
+                    1
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
+                    <Users className="w-5 h-5 text-black" />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold mb-3">Choose Character</h3>
+                <p className="text-gray-400 leading-relaxed">
+                  Select from 500+ preset characters or upload your own custom character image. Organize favorites for quick access.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="relative"
+            >
+              <div className="text-center">
+                <div className="relative inline-block mb-6">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center text-3xl font-bold">
+                    2
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
+                    <Wand2 className="w-5 h-5 text-black" />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold mb-3">Describe Action</h3>
+                <p className="text-gray-400 leading-relaxed">
+                  Write what you want your character to do. AI enhances your prompt and suggests improvements automatically.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="relative"
+            >
+              <div className="text-center">
+                <div className="relative inline-block mb-6">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center text-3xl font-bold">
+                    3
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-black" />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold mb-3">Generate Video</h3>
+                <p className="text-gray-400 leading-relaxed">
+                  Google Veo AI creates your character cameo in under 90 seconds. Download in HD, 4K, or 8K quality.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <button
+              onClick={onNavigateToHowItWorks}
+              className="group px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all flex items-center gap-2 mx-auto"
+            >
+              <span className="text-lg">See Complete Workflow</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
       <section className="relative py-24 px-6 bg-gradient-to-b from-transparent via-blue-950/20 to-transparent">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -399,6 +504,152 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
                 <p className="text-sm text-gray-400">{benefit.description}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                Perfect For Every Creator
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              From solo creators to agencies, Smart Cameos scales with your needs
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="p-8 bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500">
+                  <Users className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">Content Creators</h3>
+                  <p className="text-gray-400">Social media managers, influencers, and content creators</p>
+                </div>
+              </div>
+              <ul className="space-y-3 mt-6">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Create engaging character content for Instagram, TikTok, YouTube</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Generate multiple character variations in minutes</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Maintain consistent character presence across platforms</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="p-8 bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-3 rounded-xl bg-gradient-to-r from-emerald-500 to-green-500">
+                  <Target className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">Marketing Teams</h3>
+                  <p className="text-gray-400">Agencies, brands, and marketing departments</p>
+                </div>
+              </div>
+              <ul className="space-y-3 mt-6">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Launch character-driven campaigns faster</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Ensure brand consistency with guidelines enforcement</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Predict performance before publishing</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="p-8 bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-3 rounded-xl bg-gradient-to-r from-violet-500 to-blue-500">
+                  <Film className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">Video Producers</h3>
+                  <p className="text-gray-400">Production companies and video agencies</p>
+                </div>
+              </div>
+              <ul className="space-y-3 mt-6">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Produce character videos at scale</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Plan multi-scene character storyboards</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Export in multiple formats and resolutions</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="p-8 bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-3 rounded-xl bg-gradient-to-r from-orange-500 to-red-500">
+                  <TrendingUp className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">Entrepreneurs</h3>
+                  <p className="text-gray-400">Startups, solopreneurs, and small businesses</p>
+                </div>
+              </div>
+              <ul className="space-y-3 mt-6">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Create professional character videos without a team</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Build character-driven brand identity</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-300">Cost-effective alternative to hiring videographers</span>
+                </li>
+              </ul>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -505,6 +756,169 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-24 px-6 bg-gradient-to-b from-transparent via-emerald-950/20 to-transparent">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                Frequently Asked Questions
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400">Everything you need to know about Smart Cameos</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-6 bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 flex items-center justify-center text-xs font-bold">
+                  ?
+                </div>
+                What is a character cameo?
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                A character cameo is a short video where a character of your choice performs a specific action you describe. You can use preset characters from our library or upload your own custom character images.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="p-6 bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 flex items-center justify-center text-xs font-bold">
+                  ?
+                </div>
+                How long does generation take?
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Most character videos generate in under 90 seconds using our standard mode. Fast mode can produce results in 30-60 seconds, though with slightly reduced quality control.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="p-6 bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 flex items-center justify-center text-xs font-bold">
+                  ?
+                </div>
+                Can I use my own characters?
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Yes! You can upload your own character images (PNG, JPG, WEBP up to 10MB). Create unlimited custom characters to match your brand, personas, or creative vision.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="p-6 bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 flex items-center justify-center text-xs font-bold">
+                  ?
+                </div>
+                What video quality can I export?
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Export in multiple resolutions from 720p HD up to 8K. Choose from various aspect ratios (16:9, 9:16, 1:1, 4:5) and formats (MP4, WebM, MOV) optimized for each platform.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="p-6 bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 flex items-center justify-center text-xs font-bold">
+                  ?
+                </div>
+                How does the credit system work?
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Each character video generation costs 1 credit. Credits never expire and you can purchase additional credits anytime. New accounts start with 100 free credits to get you started.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="p-6 bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 flex items-center justify-center text-xs font-bold">
+                  ?
+                </div>
+                What AI tools are included?
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                All plans include AI Script Generator, Prompt Enhancement, Performance Predictor, Video Analysis, Style Transfer, Campaign Builder, Storyboarding, and Repurposing tools.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 }}
+              className="p-6 bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 flex items-center justify-center text-xs font-bold">
+                  ?
+                </div>
+                Can I use videos commercially?
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Yes! All generated character videos are yours to use commercially in social media, marketing, advertising, websites, and more. No attribution required.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.7 }}
+              className="p-6 bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl backdrop-blur-xl"
+            >
+              <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 flex items-center justify-center text-xs font-bold">
+                  ?
+                </div>
+                Is there a free trial?
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Every new account receives 100 free credits to explore the platform and create character videos. No credit card required to start, and credits never expire.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
