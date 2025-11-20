@@ -276,7 +276,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onNaviga
                 onClick={onGetStarted}
                 className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 rounded-full font-semibold text-lg transition-all shadow-2xl shadow-blue-500/30 flex items-center gap-2"
               >
-                Start Creating Free
+                Start Creating
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button className="group px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full font-semibold text-lg transition-all flex items-center gap-2 backdrop-blur-xl">
