@@ -9,21 +9,35 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => {
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [mode, setMode] = useState<'login' | 'signup' | 'reset'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccessMessage(null);
     setLoading(true);
 
     try {
+      if (mode === 'reset') {
+        const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+
+        if (resetError) throw resetError;
+
+        setSuccessMessage('Password reset email sent! Check your inbox.');
+        setLoading(false);
+        return;
+      }
+
       if (mode === 'signup') {
         const { data: authData, error: signUpError } = await supabase.auth.signUp({
           email,
@@ -76,17 +90,25 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         </button>
 
         <h2 className="text-3xl font-bold mb-2">
-          {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+          {mode === 'login' && 'Welcome Back'}
+          {mode === 'signup' && 'Create Account'}
+          {mode === 'reset' && 'Reset Password'}
         </h2>
         <p className="text-gray-400 mb-8">
-          {mode === 'login'
-            ? 'Sign in to continue creating amazing videos'
-            : 'Start creating AI-powered videos today'}
+          {mode === 'login' && 'Sign in to continue creating amazing videos'}
+          {mode === 'signup' && 'Start creating AI-powered videos today'}
+          {mode === 'reset' && 'Enter your email to receive a password reset link'}
         </p>
 
         {error && (
           <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400">
             {error}
+          </div>
+        )}
+
+        {successMessage && (
+          <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400">
+            {successMessage}
           </div>
         )}
 
@@ -116,40 +138,74 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-              placeholder="••••••••"
-            />
-          </div>
+          {mode !== 'reset' && (
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-medium">Password</label>
+                {mode === 'login' && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMode('reset');
+                      setError(null);
+                      setSuccessMessage(null);
+                    }}
+                    className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    Forgot password?
+                  </button>
+                )}
+              </div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={6}
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="••••••••"
+              />
+            </div>
+          )}
 
           <button
             type="submit"
             disabled={loading}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
           >
-            {loading ? 'Please wait...' : mode === 'login' ? 'Sign In' : 'Create Account'}
+            {loading && 'Please wait...'}
+            {!loading && mode === 'login' && 'Sign In'}
+            {!loading && mode === 'signup' && 'Create Account'}
+            {!loading && mode === 'reset' && 'Send Reset Link'}
           </button>
         </form>
 
-        <div className="mt-6 text-center">
-          <button
-            onClick={() => {
-              setMode(mode === 'login' ? 'signup' : 'login');
-              setError(null);
-            }}
-            className="text-blue-400 hover:text-blue-300 transition-colors"
-          >
-            {mode === 'login'
-              ? "Don't have an account? Sign up"
-              : 'Already have an account? Sign in'}
-          </button>
+        <div className="mt-6 text-center space-y-3">
+          {mode === 'reset' ? (
+            <button
+              onClick={() => {
+                setMode('login');
+                setError(null);
+                setSuccessMessage(null);
+              }}
+              className="text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              Back to sign in
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setMode(mode === 'login' ? 'signup' : 'login');
+                setError(null);
+                setSuccessMessage(null);
+              }}
+              className="text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              {mode === 'login'
+                ? "Don't have an account? Sign up"
+                : 'Already have an account? Sign in'}
+            </button>
+          )}
         </div>
       </div>
     </div>
