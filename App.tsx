@@ -18,11 +18,13 @@ import StyleTransferModal from './components/StyleTransferModal';
 import StoryboardModal from './components/StoryboardModal';
 import RepurposingModal from './components/RepurposingModal';
 import CompetitorAnalysisModal from './components/CompetitorAnalysisModal';
+import { AuthModal } from './components/AuthModal';
 import { generateVideo } from './services/geminiService';
 import { creditService } from './services/creditService';
 import { generationService } from './services/generationService';
+import { supabase } from './services/supabaseClient';
 import { FeedPost, GenerateVideoParams, PostStatus } from './types';
-import { Clapperboard, Library, FileText, Sparkles, ChevronDown, Search, Palette, Film, RefreshCw, Target } from 'lucide-react';
+import { Clapperboard, Library, FileText, Sparkles, ChevronDown, Search, Palette, Film, RefreshCw, Target, LogOut, User } from 'lucide-react';
 
 // Extend Window interface for AI Studio helper
 declare global {
@@ -111,20 +113,69 @@ const App: React.FC = () => {
   const [showToolsMenu, setShowToolsMenu] = useState(false);
   const [generations, setGenerations] = useState<any[]>([]);
   const [promptFromScript, setPromptFromScript] = useState<string>('');
-  const mockUserId = 'demo-user';
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   useEffect(() => {
+    checkAuth();
     loadUserData();
     loadGenerations();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      (async () => {
+        setUser(session?.user ?? null);
+        if (session?.user) {
+          await loadUserProfile(session.user.id);
+          await loadGenerations();
+        }
+      })();
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
+  const checkAuth = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    setUser(session?.user ?? null);
+    if (session?.user) {
+      await loadUserProfile(session.user.id);
+    }
+  };
+
+  const loadUserProfile = async (userId: string) => {
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('id', userId)
+      .maybeSingle();
+
+    if (data) {
+      setUserProfile(data);
+      setCredits(data.credits);
+    }
+  };
+
   const loadUserData = async () => {
-    setCredits(10);
+    if (!user) return;
+    await loadUserProfile(user.id);
   };
 
   const loadGenerations = async () => {
-    const userGenerations = await generationService.getUserGenerations(mockUserId);
+    if (!user) return;
+    const userGenerations = await generationService.getUserGenerations(user.id);
     setGenerations(userGenerations);
+  };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setUserProfile(null);
+    setCredits(10);
+    setShowUserMenu(false);
   };
 
   useEffect(() => {
@@ -173,7 +224,21 @@ const App: React.FC = () => {
   };
 
   const handlePurchase = async (tierId: string, credits: number, price: number) => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
     setCredits(prev => prev + credits);
+
+    const { error } = await supabase
+      .from('user_profiles')
+      .update({ credits: credits + (userProfile?.credits || 0) })
+      .eq('id', user.id);
+
+    if (!error) {
+      await loadUserProfile(user.id);
+    }
+
     setShowPricingModal(false);
     setErrorToast(`Successfully added ${credits} credits!`);
   };
@@ -186,6 +251,12 @@ const App: React.FC = () => {
   };
 
   const handleGenerate = useCallback(async (params: GenerateVideoParams) => {
+    if (!user) {
+      setShowAuthModal(true);
+      setErrorToast('Please sign in to generate videos.');
+      return;
+    }
+
     if (credits < 1) {
       setShowPricingModal(true);
       setErrorToast('Insufficient credits. Please purchase more credits to continue.');
@@ -204,7 +275,13 @@ const App: React.FC = () => {
       }
     }
 
-    setCredits(prev => prev - 1);
+    const newCredits = credits - 1;
+    setCredits(newCredits);
+
+    await supabase
+      .from('user_profiles')
+      .update({ credits: newCredits })
+      .eq('id', user.id);
 
     const newPostId = Date.now().toString();
     const refImage = params.referenceImages?.[0]?.base64;
@@ -221,7 +298,7 @@ const App: React.FC = () => {
     };
 
     // Create generation record in database
-    const generationId = await generationService.createGeneration(mockUserId, params);
+    const generationId = await generationService.createGeneration(user.id, params);
 
     // Prepend to feed immediately
     setFeed(prev => [newPost, ...prev]);
@@ -229,7 +306,7 @@ const App: React.FC = () => {
     // Start generation in background
     processGeneration(newPostId, params, generationId);
 
-  }, [credits]);
+  }, [credits, user]);
 
   const handleApiKeyDialogContinue = async () => {
     setShowApiKeyDialog(false);
@@ -298,6 +375,15 @@ const App: React.FC = () => {
         onClose={() => setShowCompetitor(false)}
         onUseSuggestion={(prompt) => setPromptFromScript(prompt)}
       />
+
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={async () => {
+          await checkAuth();
+          setErrorToast('Successfully signed in!');
+        }}
+      />
       
       {/* Error Toast */}
       <AnimatePresence>
@@ -331,6 +417,36 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-4">
+                    {user ? (
+                      <div className="relative">
+                        <button
+                          onClick={() => setShowUserMenu(!showUserMenu)}
+                          className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl hover:bg-white/10 transition-all text-white"
+                        >
+                          <User className="w-4 h-4" />
+                          <span className="text-sm font-medium">{userProfile?.username || 'User'}</span>
+                        </button>
+
+                        {showUserMenu && (
+                          <div className="absolute top-full right-0 mt-2 w-48 bg-neutral-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50">
+                            <button
+                              onClick={handleSignOut}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/5 transition-all text-left"
+                            >
+                              <LogOut className="w-4 h-4" />
+                              <span className="text-sm">Sign Out</span>
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setShowAuthModal(true)}
+                        className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-full backdrop-blur-xl transition-all text-white font-medium shadow-lg"
+                      >
+                        Sign In
+                      </button>
+                    )}
                     <div className="relative">
                       <button
                         onClick={() => setShowToolsMenu(!showToolsMenu)}
